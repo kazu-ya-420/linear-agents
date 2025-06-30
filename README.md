@@ -43,4 +43,17 @@ Enter your task when prompted. The agent will break it into two subtasks and exe
 
 ## Notes
 
-All files use OpenRouter API with GPT-4o model. You need an OpenRouter API key to run these examples. 
+All files use OpenRouter API with GPT-4o model. You need an OpenRouter API key to run these examples.
+
+## Essential Reading
+
+These resources provide deeper insights into effective agent architectures:
+
+1. **[Don't Build Multi-Agents - Cognition AI](https://cognition.ai/blog/dont-build-multi-agents#principles-of-context-engineering)**  
+   Core principles of context engineering and why parallel agents often fail
+
+2. **[Building Effective Agents - Anthropic](https://www.anthropic.com/engineering/building-effective-agents)**  
+   Best practices for building reliable agentic systems
+
+3. **[A Practical Guide to Building Agents - OpenAI](https://cdn.openai.com/business-guides-and-resources/a-practical-guide-to-building-agents.pdf)**  
+   Comprehensive guide with real-world implementation strategies 

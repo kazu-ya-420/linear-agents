@@ -1,11 +1,5 @@
 # Agent Structure 04: sequential with compression (reliable on longer tasks)
 # break → compress → sub-agent 1 → compress → sub-agent 2 → compress → merge
-# 
-# why this scales well:
-# - sequential execution like 03 (reliable)
-# - compression prevents context window overflow
-# - uses cheaper model for compression steps
-# - maintains key information while reducing tokens
 
 import os
 import json

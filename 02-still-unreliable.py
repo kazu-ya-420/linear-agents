@@ -1,10 +1,5 @@
 # Agent Structure 02: parallel agents with shared context (still unreliable)
 # break → two parallel sub-agents with shared log → merge
-# 
-# why still unreliable:
-# - agents share conversation history but still run in parallel
-# - race conditions: agents might start before others finish writing
-# - timing issues can cause inconsistent behavior
 
 import os
 import json

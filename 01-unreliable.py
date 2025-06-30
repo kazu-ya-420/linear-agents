@@ -1,11 +1,5 @@
 # Agent Structure 01: parallel agents (unreliable)
 # break → two parallel sub-agents → merge (no shared context)
-# 
-# why this is unreliable:
-# - sub-agents run completely independently 
-# - no communication between them
-# - they can't see each other's work
-# - often leads to disconnected or contradictory results
 
 import os
 import json

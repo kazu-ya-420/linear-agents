@@ -1,11 +1,5 @@
 # Agent Structure 03: sequential agents (simple and reliable)
 # break → sub-agent 1 → sub-agent 2 → merge
-# 
-# why this works well:
-# - agents run one after another (sequential)
-# - each agent sees all previous work
-# - no timing issues or race conditions
-# - predictable and consistent results
 
 import os
 import json
