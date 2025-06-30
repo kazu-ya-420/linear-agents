@@ -1,5 +1,11 @@
-# Agent Structure 04
+# Agent Structure 04: sequential with compression (reliable on longer tasks)
 # break → compress → sub-agent 1 → compress → sub-agent 2 → compress → merge
+# 
+# why this scales well:
+# - sequential execution like 03 (reliable)
+# - compression prevents context window overflow
+# - uses cheaper model for compression steps
+# - maintains key information while reducing tokens
 
 import os
 import json
@@ -36,6 +42,7 @@ def chat(msgs, model=MODEL_MAIN):
     except Exception as e:
         raise RuntimeError(f"API call failed: {e}")
 
+# full conversation log (gets compressed periodically to save tokens)
 conv = []
 
 # ───────────────────────── Task-generation Agent ─────────────────────────
@@ -57,6 +64,8 @@ def generate_subtasks():
 # ───────────────────────── Compressor Agent ─────────────────────────
 
 def compress():
+    # uses cheaper model to summarize conversation and keep only essential info
+    # prevents token limit issues while maintaining context continuity
     summary = chat(
         conv + [{
             "role": "system",
@@ -73,6 +82,8 @@ def compress():
 # ───────────────────────── First Sub-agent ─────────────────────────
 
 def subagent_1(prompt, ctx):
+    # receives compressed context instead of full conversation history
+    # gets essential info but uses fewer tokens
     result = chat([
         {"role": "system", "content": f"Context: {ctx}"},
         {"role": "system", "content": "You are Sub-agent 1."},
@@ -87,6 +98,8 @@ def subagent_1(prompt, ctx):
 # ───────────────────────── Second Sub-agent ─────────────────────────
 
 def subagent_2(prompt, ctx):
+    # gets compressed context including sub-agent 1's work summary
+    # maintains coordination while controlling token usage
     result = chat([
         {"role": "system", "content": f"Context: {ctx}"},
         {"role": "system", "content": "You are Sub-agent 2."},
@@ -118,15 +131,17 @@ def main():
     sub1, sub2 = generate_subtasks()
     print(f"\n📦 Subtasks:\n 1) {sub1}\n 2) {sub2}")
 
+    # compress conversation before each agent step
+    # keeps token usage manageable for longer tasks
     ctx = compress()
     r1 = subagent_1(sub1, ctx)
     conv.append({"role": "assistant", "content": f"[Sub-agent 1] {r1}"})
 
-    ctx = compress()
+    ctx = compress()  # compress again including sub-agent 1's work
     r2 = subagent_2(sub2, ctx)
     conv.append({"role": "assistant", "content": f"[Sub-agent 2] {r2}"})
 
-    ctx = compress()
+    ctx = compress()  # final compression for merge step
     final_result = merge_results(ctx)
     print(f"\n{'─' * 50}")
     print(f"✅ FINAL ANSWER")

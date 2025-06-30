@@ -53,6 +53,7 @@ lock = threading.Lock()
 # ───────────────────────── Task-generation Agent ─────────────────────────
 
 def generate_subtasks():
+    # break down task using current conversation context
     txt = chat(conv + [
         {"role": "system", "content": "Return exactly TWO subtasks as JSON: {\"subtasks\": [\"first task\", \"second task\"]}"}
     ])
@@ -61,6 +62,7 @@ def generate_subtasks():
         subtasks = data["subtasks"]
         if len(subtasks) != 2:
             raise ValueError(f"Expected 2 subtasks, got {len(subtasks)}")
+        # safely add to shared conversation log
         with lock:
             conv.append({"role": "assistant", "content": txt})
         return subtasks[0].strip(), subtasks[1].strip()
@@ -71,13 +73,15 @@ def generate_subtasks():
 # ───────────────────────── Shared-log Sub-agent Template ─────────────────────────
 
 def run_sub(prompt, tag, out_q):
+    # each agent gets a copy of the shared conversation history
+    # this gives context but doesn't prevent parallel execution issues
     msgs = conv.copy() + [
         {"role": "system", "content": f"You are Sub-agent {tag}."},
         {"role": "user", "content": f"{prompt} Answer in short."}
     ]
     res = chat(msgs)
     
-    # Print with color coding
+    # print results immediately (order may vary due to parallel execution)
     color = BLUE if tag == "1" else RED
     print(f"\n{'─' * 50}")
     print(f"{color}🔹 Sub-agent {tag} Response:{RESET}")
@@ -85,6 +89,7 @@ def run_sub(prompt, tag, out_q):
     print(f"{'─' * 50}")
     
     out_q.put((tag, res))
+    # safely write back to shared log
     with lock:
         conv.append({"role": "assistant", "content": f"[Sub-agent {tag}] {res}"})
 
@@ -92,6 +97,8 @@ def run_sub(prompt, tag, out_q):
 # ───────────────────────── Merge Agent ─────────────────────────
 
 def merge_results(r1, r2):
+    # merge agent has full conversation context
+    # better than isolated merge but still dealing with parallel execution artifacts
     return chat(conv + [
         {"role": "system", "content": "Combine the two sub-results into ONE clear answer."},
         {"role": "user", "content": f"RESULT-1:\n{r1}\n\nRESULT-2:\n{r2}"}
@@ -105,22 +112,26 @@ def main():
     if not task:
         raise ValueError("No task given.")
     
+    # add user task to shared conversation
     conv.append({"role": "user", "content": task})
 
     sub1, sub2 = generate_subtasks()
     print(f"\n📦 Subtasks:\n 1) {sub1}\n 2) {sub2}")
 
-    # Parallel sub-agents
+    # run agents in parallel but with shared conversation access
+    # improvement: agents can see context
+    # problem: still parallel timing issues and race conditions
     q = queue.Queue()
     threading.Thread(target=run_sub, args=(sub1, "1", q)).start()
     threading.Thread(target=run_sub, args=(sub2, "2", q)).start()
 
+    # collect results as they complete (order may vary)
     results = {}
     while len(results) < 2:
         tag, out = q.get()
         results[tag] = out
 
-    # Final merge
+    # merge with full conversation context
     final = merge_results(results["1"], results["2"])
     print(f"\n{'─' * 50}")
     print(f"✅ FINAL ANSWER")
